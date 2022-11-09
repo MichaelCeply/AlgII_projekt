@@ -4,6 +4,7 @@
 #include <vector>
 #include <fstream>
 #include <string>
+#include <algorithm>
 class SourceCode
 {
 private:
@@ -13,5 +14,7 @@ private:
 public:
 	SourceCode(int);
 	void addIncludedSC(int);
+	void addIncludedInSC(int);
+	int GetNumComp()const;
 	int GetNum();
 };

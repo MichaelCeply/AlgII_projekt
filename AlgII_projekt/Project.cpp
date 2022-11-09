@@ -45,7 +45,7 @@ void Project::AddSourceCode(int intSC,int intIncl)
     int InclPos = this->ScPosition(intIncl);
     if (InclPos != -1)
     {
-        //
+        //this->sourceCodes.at(InclPos).addIncludedSC()
     }
     else
     {
@@ -56,12 +56,23 @@ void Project::AddSourceCode(int intSC,int intIncl)
 
 int Project::ScPosition(int a)
 {
+    this->SortSC();
     for (int i = 0; i < this->sourceCodes.size(); i++)
     {
         if (a == this->sourceCodes.at(i).GetNum())
             return i;
     }
     return -1;
+}
+
+void Project::SortSC()
+{
+    std::sort(this->sourceCodes.begin(), this->sourceCodes.end(), Compare);
+}
+
+bool Project::Compare(const SourceCode& a,const SourceCode& b)
+{
+    return a.GetNumComp() < b.GetNumComp();
 }
 
 bool Project::ReadFile(std::string fileName)
@@ -89,8 +100,9 @@ bool Project::ReadFile(std::string fileName)
 
 void Project::PrintDependecies()
 {
+    this->SortSC();
     for (int i = 0; i < this->sourceCodes.size(); i++)
     {
-        std::cout << this->sourceCodes.at(i).GetNum() << std::endl;
+        std::cout << this->sourceCodes.at(i).GetNum()<<": " << std::endl;
     }
 }
