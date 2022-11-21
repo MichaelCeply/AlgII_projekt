@@ -4,7 +4,7 @@ void Project::ParseSourceCodes(std::vector<std::string> vecOfStrings)
 {
     for (int i = 0; i < vecOfStrings.size(); i++)
     {
-        std::string tmpSC,includesFrom;
+        std::string fromStr,toStr;
         int spaceCounter = 0;
         for (int j = 0; j < vecOfStrings.at(i).size(); j++)
         {
@@ -15,64 +15,44 @@ void Project::ParseSourceCodes(std::vector<std::string> vecOfStrings)
             }
             else if (spaceCounter == 0)
             {
-                tmpSC.push_back(c);
+                fromStr.push_back(c);
             }
             else if (spaceCounter == 2)
             {
-                includesFrom.push_back(c);
+                toStr.push_back(c);
             }
         }
-        int intSC = std::stoi(tmpSC);
-        int intInclude = std::stoi(includesFrom);
-        this->AddSourceCode(intSC, intInclude);
+
+        int fromInt = std::stoi(fromStr);
+        int toInt = std::stoi(toStr);
+        
+        if (this->sourceCodes.size() == 0 )
+        {
+            this->sourceCodes.push_back(fromInt);
+        }
+        if(std::find(this->sourceCodes.begin(), this->sourceCodes.end(), fromInt) == this->sourceCodes.end())
+        {
+            this->sourceCodes.push_back(fromInt);
+        }
+        if (std::find(this->sourceCodes.begin(), this->sourceCodes.end(), toInt) == this->sourceCodes.end())
+        {
+            this->sourceCodes.push_back(toInt);
+        }
+        
     }
+
+    std::sort(this->sourceCodes.begin(), this->sourceCodes.end());
+
+    for (int i = 0; i < this->sourceCodes.size() * this->sourceCodes.size(); i++)
+    {
+        this->dependencyMatrix.push_back(0);
+    }
+
 }
 
-void Project::AddSourceCode(int intSC,int intIncl)
+int Project::TwoDToOneD(int x, int y)
 {
-    int SCpos = this->ScPosition(intSC);
-    if (SCpos != -1)
-    {
-        this->sourceCodes.at(SCpos).addIncludedSC(intIncl);
-    }
-    else
-    {
-        SourceCode sc(intSC);
-        sc.addIncludedSC(intIncl);
-        this->sourceCodes.push_back(sc);
-    }
-
-    int InclPos = this->ScPosition(intIncl);
-    if (InclPos != -1)
-    {
-        //this->sourceCodes.at(InclPos).addIncludedSC()
-    }
-    else
-    {
-        SourceCode sc(intIncl);
-        this->sourceCodes.push_back(sc);
-    }
-}
-
-int Project::ScPosition(int a)
-{
-    this->SortSC();
-    for (int i = 0; i < this->sourceCodes.size(); i++)
-    {
-        if (a == this->sourceCodes.at(i).GetNum())
-            return i;
-    }
-    return -1;
-}
-
-void Project::SortSC()
-{
-    std::sort(this->sourceCodes.begin(), this->sourceCodes.end(), Compare);
-}
-
-bool Project::Compare(const SourceCode& a,const SourceCode& b)
-{
-    return a.GetNumComp() < b.GetNumComp();
+    return x*this->sourceCodes.size() + y;
 }
 
 bool Project::ReadFile(std::string fileName)
@@ -100,9 +80,8 @@ bool Project::ReadFile(std::string fileName)
 
 void Project::PrintDependecies()
 {
-    this->SortSC();
     for (int i = 0; i < this->sourceCodes.size(); i++)
     {
-        std::cout << this->sourceCodes.at(i).GetNum()<<": " << std::endl;
+        std::cout << this->sourceCodes.at(i) << std::endl;
     }
 }

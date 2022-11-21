@@ -1,16 +1,19 @@
 #pragma once
-#include "SourceCode.h"
+#include <cstdio>
+#include <iostream>
+#include <vector>
+#include <fstream>
+#include <string>
+#include <algorithm>
 class Project
 {
 private:
-	std::vector<SourceCode> sourceCodes;
+	std::vector<int> sourceCodes;
+	std::vector<int> dependencyMatrix;
 	void ParseSourceCodes(std::vector<std::string>);
-	void AddSourceCode(int, int);
-	int ScPosition(int);
-	void SortSC();
+	int TwoDToOneD(int, int);
 public:
 	bool ReadFile(std::string);
 	void PrintDependecies();
-	static bool Compare(const SourceCode& a, const SourceCode& b);
 };
 
