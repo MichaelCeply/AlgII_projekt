@@ -106,18 +106,6 @@ void Project::Warshall()
     this->dependencyMatrix = vecOfVec[lineLenght];
 }
 
-void Project::PrintDependencyMatrix()
-{
-    for (int i = 0; i < this->sourceCodes.size();i++)
-    {
-        for (int j = 0; j < this->sourceCodes.size();j++)
-        {
-            std::cout << this->dependencyMatrix[this->TwoDToOneD(i, j)] << ",";
-        }
-        std::cout << std::endl;
-    }
-}
-
 std::vector<int> Project::GetRow(int pos)
 {
     std::vector<int> row;
