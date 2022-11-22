@@ -3,6 +3,6 @@
 int main()
 {
     Project p;
-    p.ReadFile("SmallProject.txt");
+    p.ReadFile("LargeProject.txt");
     p.PrintDependecies();
 }

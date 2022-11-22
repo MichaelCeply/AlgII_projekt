@@ -11,6 +11,10 @@ private:
 	std::vector<int> sourceCodes;
 	std::vector<int> dependencyMatrix;
 	void ParseSourceCodes(std::vector<std::string>);
+	void FillDependencyMatrix(std::vector<std::string>);
+	void Warshall();
+	void PrintDependencyMatrix();
+	std::vector<int> GetRow(int);
 	int TwoDToOneD(int, int);
 public:
 	bool ReadFile(std::string);
