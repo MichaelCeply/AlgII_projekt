@@ -1,3 +1,9 @@
+/**
+*@file Project.cpp
+*@author Michael Ceply
+*@brief cpp soubor tridy Project
+*/
+
 #include "Project.h"
 
 void Project::ParseSourceCodes(std::vector<std::string> vecOfStrings)
